@@ -18,7 +18,7 @@ const Store = () => {
       }}
     >
       {products.map((product) => (
-        <ProductCard {...product} key={product.id} />
+        <ProductCard productData={product} key={product.id} />
       ))}
     </div>
   );

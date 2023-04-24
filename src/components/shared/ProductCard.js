@@ -1,21 +1,72 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./ProductCard.module.css";
-
 import { Link } from "react-router-dom";
 
 //functions
-import { shortenTitle } from "../../helpers/functions";
+import { shortenTitle, isInCart, quantityCount } from "../../helpers/functions";
 
-const ProductCard = (props) => {
-  const { image, price, title, id } = props;
+//context
+import { cartContext } from "../../context/CardContextProvider";
+
+//icons
+import trashIcon from "../../assets/icons/trash.svg";
+
+const ProductCard = ({ productData }) => {
+  const { image, price, title, id } = productData;
+  const { state, dispatch } = useContext(cartContext);
   return (
     <div className={styles.container}>
       <img src={image} alt={title} className={styles.productImg} />
       <h3>{shortenTitle(title)}</h3>
       <p>${price}</p>
+      <div>
+        <Link to={`/products/${id}`}>details</Link>
+        <div>
+          {quantityCount(state, id) === 1 && (
+            <button
+              onClick={() =>
+                dispatch({ type: "REMOVE_ITEM", payload: productData })
+              }
+            >
+              <img
+                src={trashIcon}
+                alt="trash icon"
+                style={{ width: "15px", height: "15px" }}
+              />
+            </button>
+          )}
 
-      <Link to={`/products/${id}`}>details</Link>
-      <button>click</button>
+          {quantityCount(state, id) > 1 && (
+            <button
+              onClick={() =>
+                dispatch({ type: "DECREASE", payload: productData })
+              }
+            >
+              -
+            </button>
+          )}
+          {quantityCount(state, id) > 0 && (
+            <span>{quantityCount(state, id)} </span>
+          )}
+          {isInCart(state, id) ? (
+            <button
+              onClick={() =>
+                dispatch({ type: "INCREASE", payload: productData })
+              }
+            >
+              +
+            </button>
+          ) : (
+            <button
+              onClick={() =>
+                dispatch({ type: "ADD_ITEM", payload: productData })
+              }
+            >
+              Add to Cart
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
