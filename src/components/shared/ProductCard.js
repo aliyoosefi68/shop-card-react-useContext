@@ -19,25 +19,23 @@ const ProductCard = ({ productData }) => {
       <img src={image} alt={title} className={styles.productImg} />
       <h3>{shortenTitle(title)}</h3>
       <p>${price}</p>
-      <div>
+      <div className={styles.linckContainer}>
         <Link to={`/products/${id}`}>details</Link>
-        <div>
+        <div className={styles.buttonContainer}>
           {quantityCount(state, id) === 1 && (
             <button
+              className={styles.smalButton}
               onClick={() =>
                 dispatch({ type: "REMOVE_ITEM", payload: productData })
               }
             >
-              <img
-                src={trashIcon}
-                alt="trash icon"
-                style={{ width: "15px", height: "15px" }}
-              />
+              <img src={trashIcon} alt="trash icon" />
             </button>
           )}
 
           {quantityCount(state, id) > 1 && (
             <button
+              className={styles.smalButton}
               onClick={() =>
                 dispatch({ type: "DECREASE", payload: productData })
               }
@@ -50,6 +48,7 @@ const ProductCard = ({ productData }) => {
           )}
           {isInCart(state, id) ? (
             <button
+              className={styles.smalButton}
               onClick={() =>
                 dispatch({ type: "INCREASE", payload: productData })
               }

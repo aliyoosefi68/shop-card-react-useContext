@@ -7,29 +7,40 @@ import Cart from "./shared/Cart";
 //context
 import { cartContext } from "../context/CardContextProvider";
 
+//styles
+import styles from "./ShopCart.module.css";
+
 const ShopCard = () => {
   const { state, dispatch } = useContext(cartContext);
   return (
-    <div>
-      <div>
+    <div className={styles.container}>
+      <div className={styles.cartContainer}>
         {state.selectedItems.map((item) => (
           <Cart key={item.id} data={item} />
         ))}
       </div>
 
       {state.itemsCounter > 0 && (
-        <div>
+        <div className={styles.payment}>
           <p>
             <span>totla items : </span> {state.itemsCounter}
           </p>
           <p>
             <span>totla Payment : </span> ${state.total}
           </p>
-          <div>
-            <button onClick={() => dispatch({ type: "CHECKOUT" })}>
+          <div className={styles.buttonContainer}>
+            <button
+              onClick={() => dispatch({ type: "CHECKOUT" })}
+              className={styles.chechout}
+            >
               check out
             </button>
-            <button onClick={() => dispatch({ type: "CLEAR" })}>clear</button>
+            <button
+              onClick={() => dispatch({ type: "CLEAR" })}
+              className={styles.clear}
+            >
+              clear
+            </button>
           </div>
         </div>
       )}

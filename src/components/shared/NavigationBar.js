@@ -7,13 +7,18 @@ import { cartContext } from "../../context/CardContextProvider";
 //icon
 import shopIcon from "../../assets/icons/shop.svg";
 
+//style
+import styles from "./NavigationBar.module.css";
+
 const NavigationBar = () => {
   const { state } = useContext(cartContext);
   return (
-    <div>
-      <div>
-        <Link to="/products">Products</Link>
-        <div>
+    <div className={styles.mainContainer}>
+      <div className={styles.container}>
+        <Link to="/products" className={styles.productLink}>
+          Products
+        </Link>
+        <div className={styles.iconContainer}>
           <Link to="/cart">
             <img src={shopIcon} alt="shop card icon" />
           </Link>
