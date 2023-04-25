@@ -33,6 +33,7 @@ const cartReducer = (state, action) => {
           ...state,
           selectedItems: [...state.selectedItems],
           ...sumItems(state.selectedItems),
+          checkout: false,
         };
       }
     }
